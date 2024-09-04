@@ -1,13 +1,14 @@
-import { application } from "express"
-import { port } from "./app"
+
+
+import app from "./app"
 import config from "./app/config"
 import mongoose from 'mongoose'
 
 async function main() {
   await mongoose.connect(config.db_url as string)
   
-  application.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+  app.listen(config.port, () => {
+    console.log(`Example app listening on port ${config.port}`)
   })
 }
 main()
