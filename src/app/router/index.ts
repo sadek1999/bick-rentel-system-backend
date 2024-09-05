@@ -1,12 +1,13 @@
 import { Router } from "express"
+import { bikeRouter } from "../modules/bike/bike.routes"
 
 
 
 const router=Router()
 const moduleRoutes=[
     {
-        path:'/',
-        router:encodeURIComponent,
+        path:'/bike',
+        router:bikeRouter,
     }
 ]
 
