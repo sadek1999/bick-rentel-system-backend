@@ -9,6 +9,26 @@ return result
 
 }
 
+const getallBikes=async()=>{
+    const result=await Bike.find();
+    return result
+
+}
+const getSingleBike=async()=>{
+    const result=await Bike.find();
+    return result;
+}
+const deleteBike=async()=>{
+
+}
+const updateBike=async()=>{
+
+}
+
 export const bikeServices={
-    createBike
+    createBike,
+    getallBikes,
+    getSingleBike,
+    deleteBike,
+    updateBike,
 }

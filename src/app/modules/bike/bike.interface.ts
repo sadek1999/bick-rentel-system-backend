@@ -2,7 +2,7 @@
 export type TBike={
     name:string
     description:string,
-    pricePerHour:string,
+    pricePerHour:number,
     isAvailable:boolean,
     cc:string,
     year:string,

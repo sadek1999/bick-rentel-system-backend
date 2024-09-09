@@ -16,6 +16,50 @@ const createBikeIntoDB=catchAsync(async(req,res)=>{
     })
 })
 
+const getAllBikesFromDB=catchAsync(async(req,res)=>{
+    const result=await bikeServices.getallBikes()
+    SendResponse(res,{
+        success:true,
+        statusCode:httpStatus.OK,
+        message:"successfully get all bike from DB",
+        data:result
+    })
+})
+
+const getSingleBikeFromDB=catchAsync(async(req,res)=>{
+    const result=await bikeServices.getSingleBike(req.params.id);
+    SendResponse(res,{
+        success:true,
+        statusCode:httpStatus.OK,
+        message:"successfully get Single bike from DB",
+        data:result
+    })
+})
+
+const  updateBikeFromDB=catchAsync(async(req,res)=>{
+    const result=await bikeServices.updateBike(req.params.id,req.body);
+    SendResponse(res,{
+        success:true,
+        statusCode:httpStatus.OK,
+        message:"successfully update the  bike from DB",
+        data:result
+    })
+})
+
+const deleteBikeFromDB=catchAsync(async(req,res)=>{
+    const result=await bikeServices.deleteBike(req.params.id);
+    SendResponse(res,{
+        success:true,
+        statusCode:httpStatus.OK,
+        message:"successfully delate bike from DB",
+        data:result
+    })
+})
+
 export const bikeController={
-    createBikeIntoDB
+    createBikeIntoDB,
+    getAllBikesFromDB,
+    getSingleBikeFromDB,
+    updateBikeFromDB,
+    deleteBikeFromDB,
 }

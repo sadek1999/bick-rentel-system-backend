@@ -12,7 +12,7 @@ const bikeSchema=new Schema<TBike>({
         required:true,
     },
     pricePerHour:{
-        type:String,
+        type:Number,
         required:true,
     },
     isAvailable:{
@@ -35,6 +35,8 @@ const bikeSchema=new Schema<TBike>({
         type:String,
         required:true,
     },
+},{
+ timestamps:true,
 })
 
 export const Bike=model <TBike>("Bike",bikeSchema)
