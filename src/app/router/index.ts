@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { bikeRouter } from "../modules/bike/bike.routes"
+import { UserRouter } from "../modules/user/user.routes"
+
 
 
 
@@ -8,6 +10,10 @@ const moduleRoutes=[
     {
         path:'/bike',
         router:bikeRouter,
+    },
+    {
+        path:"/user",
+        router:UserRouter
     }
 ]
 
