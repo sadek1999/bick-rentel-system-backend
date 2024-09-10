@@ -8,9 +8,9 @@ const router=express.Router()
 
 router.post('/',ValidateRequest(bikeValidationSchema) ,bikeController.createBikeIntoDB)
 router.get("/",bikeController.getAllBikesFromDB);
-router.get("/bikeId",bikeController.getSingleBikeFromDB)
-router.patch("/bikeId",bikeController.updateBikeFromDB)
-router.delete("/bikeId",bikeController.deleteBikeFromDB)
+router.get("/:id",bikeController.getSingleBikeFromDB)
+router.patch("/:id",bikeController.updateBikeFromDB)
+router.delete("/:id",bikeController.deleteBikeFromDB)
 
 
 export const bikeRouter=router

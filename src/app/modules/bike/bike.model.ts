@@ -40,4 +40,20 @@ const bikeSchema=new Schema<TBike>({
  timestamps:true,
 })
 
+
+bikeSchema.pre(["find","findOne"],async function (next) {
+    this.where({isAvailable:{$ne:false}})
+    next()
+    
+})
+
+
+
+bikeSchema.pre("aggregate",function(next){
+    this.pipeline().unshift({$match:{isAvailable:{$ne:false}}})
+    next()
+})
+
+
+
 export const Bike=model <TBike>("Bike",bikeSchema)

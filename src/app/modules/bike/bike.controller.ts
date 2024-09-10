@@ -27,7 +27,9 @@ const getAllBikesFromDB=catchAsync(async(req,res)=>{
 })
 
 const getSingleBikeFromDB=catchAsync(async(req,res)=>{
+
     const result=await bikeServices.getSingleBike(req.params.id);
+    
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
