@@ -1,3 +1,4 @@
+import { User_Role } from "./user.const";
 
 export type TUser={
     name:string;
@@ -8,3 +9,5 @@ export type TUser={
     role:"admin"|"user";
     isDelete:boolean;
 }
+
+export type TUserRole=keyof typeof User_Role
