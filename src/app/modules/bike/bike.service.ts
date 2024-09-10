@@ -1,34 +1,44 @@
+import QueryBuilder from "../../builder/QueryBuilder";
+import { bikeSearchableFields } from "./bike.const";
+import { TBike } from "./bike.interface";
+import { Bike } from "./bike.model";
 
-import { TBike } from "./bike.interface"
-import { Bike } from "./bike.model"
+const createBike = async (payload: TBike) => {
+  const result = await Bike.create(payload);
+  return result;
+};
 
+const getallBikes = async (query: Record<string, unknown>) => {
+  const bikeQuery = new QueryBuilder(Bike.find(), query)
+    .search(bikeSearchableFields)
+    .fields()
+    .filter()
+    .paginate()
+    .sort();
+  const result = await bikeQuery.modelQuery;
+  return result;
+};
+const getSingleBike = async (id:string) => {
+  const result = await Bike.findById(id);
+  return result;
+};
 
-const createBike=async(payload:TBike)=>{
-const result=await Bike.create(payload);
-return result
+const deleteBike = async (id:string) => {
 
-}
+  const result= await Bike.findByIdAndUpdate(id,{isAvailable:false},{new:true})
+  return result;
+};
 
-const getallBikes=async()=>{
-    const result=await Bike.find();
-    return result
+const updateBike = async (id:string,payload:Partial<TBike>) => {
 
-}
-const getSingleBike=async()=>{
-    const result=await Bike.find();
-    return result;
-}
-const deleteBike=async()=>{
+ const result=await Bike.findByIdAndUpdate(id,payload,{new:true})
+ return result;
+};
 
-}
-const updateBike=async()=>{
-
-}
-
-export const bikeServices={
-    createBike,
-    getallBikes,
-    getSingleBike,
-    deleteBike,
-    updateBike,
-}
+export const bikeServices = {
+  createBike,
+  getallBikes,
+  getSingleBike,
+  deleteBike,
+  updateBike,
+};

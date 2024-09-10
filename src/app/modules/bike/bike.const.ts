@@ -1,0 +1,1 @@
+export const bikeSearchableFields=['cc','pricePerHour','brand',"name",'model']
