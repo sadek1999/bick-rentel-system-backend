@@ -7,7 +7,8 @@ const createUser=async(payload:TUser)=>{
  return result;
 }
 const getAllUsers=async()=>{
-
+ const result=await User.find();
+ return result;
 }
 
 const getSingleUser=async()=>{
