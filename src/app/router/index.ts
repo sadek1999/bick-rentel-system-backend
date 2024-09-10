@@ -18,7 +18,7 @@ const moduleRoutes=[
         router:UserRouter
     },
     {
-        path:"/bookings",
+        path:"/rentals",
         router:bookingsRouter
     },
     {

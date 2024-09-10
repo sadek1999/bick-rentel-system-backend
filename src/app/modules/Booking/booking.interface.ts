@@ -6,6 +6,6 @@ export type TBooking={
     startTime:string;
     returnTime?:string;
     totalCost?:number;
-    isReturned:boolean;
+    isReturned?:boolean;
     
 }

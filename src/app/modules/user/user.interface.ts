@@ -1,3 +1,4 @@
+import { Model } from "mongoose";
 import { User_Role } from "./user.const";
 
 export type TUser={
@@ -11,3 +12,12 @@ export type TUser={
 }
 
 export type TUserRole=keyof typeof User_Role
+
+// userSchema.statics.isUserExistsByCustomId = async function (id: string) {
+//     return await User.findOne({ id }).select("+password");
+//   };
+
+
+export interface UserModel extends Model<TUser>{
+    isUserExistsByEmail(email:string):Promise<TUser|null>
+}
