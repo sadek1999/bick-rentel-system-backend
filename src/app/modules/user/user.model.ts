@@ -19,17 +19,19 @@ const userSchema=new Schema<TUser>({
     timestamps:true,
 })
 
-// userSchema.pre("save",async function (next)=>{
-// let user=this
-// user.password=bcrypt.hash(user.password, saltRounds)
-// next()
-// })
 
+// change the password plain text ot hash before save 
 userSchema.pre('save',async function (Next) {
     let user=this;
     user.password=await bcrypt.hash(user.password,Number(config.saltRound));
     Next()
 
 })
+//
+userSchema.post("save", function (doc, next) {
+    doc.password = "";
+  
+    next();
+  });
 
 export const User=model<TUser>("user",userSchema)
