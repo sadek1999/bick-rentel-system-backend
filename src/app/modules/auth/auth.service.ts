@@ -24,7 +24,7 @@ const Login = async (payLoad: TUser) => {
 
   const jsonPayload = {
     userEmail: user?.email,
-    role: user?.password,
+    role: user?.role,
   };
 
   const accessToken = createToken(
