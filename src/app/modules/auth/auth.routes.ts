@@ -1,11 +1,8 @@
 import express from "express";
 import { authController } from "./auth.controller";
 import ValidateRequest from "../../middlewares/validateRequest";
-import {
-  changePasswordValidationSchema,
-  loginValidationSchema,
-  refreshTokenValidationSchema,
-} from "./auth.validation";
+import { loginValidationSchema } from "./auth.validation";
+import { userValidationSchema } from "../user/user.validation";
 
 const router = express.Router();
 
@@ -14,15 +11,11 @@ router.post(
   ValidateRequest(loginValidationSchema),
   authController.LoginUser
 );
+
 router.post(
-  "/change-password",
-  ValidateRequest(changePasswordValidationSchema),
-  authController.changePassword
-);
-router.post(
-  "/refresh-token",
-  ValidateRequest(refreshTokenValidationSchema),
-  authController.createRefreshToken
+  "/singUp",
+  ValidateRequest(userValidationSchema),
+  authController.singUpUser
 );
 
 export const authRouter = router;

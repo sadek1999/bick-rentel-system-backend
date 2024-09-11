@@ -7,38 +7,41 @@ import { authServices } from "./auth.service";
 
 
 const LoginUser=catchAsync(async(req,res)=>{
-    const result=await authServices.Login();
+    const result=await authServices.Login(req.body);
+
+    const {accessToken,user }=result
+
+      res.status(httpStatus.OK).json({
+        success:true,
+        statusCode:httpStatus.OK,
+        message:'User logged in successfully',
+        token:accessToken,
+        data:user
+      })
+
+    // SendResponse(res,{
+    //     statusCode:httpStatus.OK,
+    //     success:true,
+    //     message:"successfully login user",
+    //     token:accessToken,
+    //     data:user
+    // })
+})
+const singUpUser=catchAsync(async(req,res)=>{
+    const result= await authServices.singUp(req.body)
 
     SendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
-        message:"successfully login user",
+        message:"User registered successfully",
         data:result
     })
 })
 
-const createRefreshToken=catchAsync(async(req,res)=>{
-    const result=await authServices.refreshToken()
-    SendResponse(res,{
-        statusCode:httpStatus.OK,
-        success:true,
-        message:"successfully create refresh toke for user",
-        data:result
-    })
-})
 
-const changePassword=catchAsync(async(req,res)=>{
-    const result= await authServices.changPassword()
-    SendResponse(res,{
-        statusCode:httpStatus.OK,
-        success:true,
-        message:"successfully change Password ",
-        data:result
-    })
-})
 
 export const authController={
     LoginUser,
-    createRefreshToken,
-    changePassword,
+    singUpUser,
+    
 }
