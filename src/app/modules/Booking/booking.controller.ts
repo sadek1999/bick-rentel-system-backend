@@ -3,6 +3,8 @@ import catchAsync from "../../utils/catchAsync";
 import { SendResponse } from "../../utils/sendResponse";
 
 import { bookingsServices } from "./booking.service";
+import { authController } from "../auth/auth.controller";
+import { authServices } from "../auth/auth.service";
 
 
 const createBookingIntoDB=catchAsync(async(req,res)=>{
@@ -15,6 +17,16 @@ const createBookingIntoDB=catchAsync(async(req,res)=>{
     })
 })
 
+const returnBike=catchAsync(async(req,res)=>{
+    const result= await bookingsServices.returnBike(req.params)
+    
+    SendResponse(res,{
+        success:true,
+        statusCode:httpStatus.OK,
+        message:"bike is returned successfully",
+        data:result
+    })
+})
 const getAllBookingsFromDB=catchAsync(async(req,res)=>{
     const  result=await bookingsServices.getAllBookings(req);
     SendResponse(res,{
@@ -54,8 +66,10 @@ const deleteBookingsFromDB=catchAsync(async(req,res)=>{
 })
 export const bookingsControllers={
     createBookingIntoDB,
+    returnBike,
     getAllBookingsFromDB,
     getSingleBookingsFromDB,
     updateBookingInDB,
     deleteBookingsFromDB,
+
 }

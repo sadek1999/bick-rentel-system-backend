@@ -41,18 +41,7 @@ const bikeSchema=new Schema<TBike>({
 })
 
 
-bikeSchema.pre(["find","findOne"],async function (next) {
-    this.where({isAvailable:{$ne:false}})
-    next()
-    
-})
 
-
-
-bikeSchema.pre("aggregate",function(next){
-    this.pipeline().unshift({$match:{isAvailable:{$ne:false}}})
-    next()
-})
 
 bikeSchema.statics.isBikeExistById=async function (id:string) {
     return await Bike.findById(id)

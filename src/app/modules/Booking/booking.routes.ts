@@ -14,6 +14,7 @@ router.post(
   bookingsControllers.createBookingIntoDB
 );
 router.get("/",auth('admin'), bookingsControllers.getAllBookingsFromDB);
+router.put('/:id/return',auth('admin'),bookingsControllers.returnBike)
 
 router.get("/id",bookingsControllers.getSingleBookingsFromDB);
 router.patch("/id",bookingsControllers.updateBookingInDB);

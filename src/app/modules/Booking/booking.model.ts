@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose"
-import { TBooking } from "./booking.interface"
+import { bookingMode, TBooking } from "./booking.interface"
 
 
 
@@ -14,4 +14,8 @@ const bookingSchema=new Schema<TBooking>({
     timestamps:true,
 })
 
-export const Bookings=model <TBooking>('bookings',bookingSchema)
+bookingSchema.statics.isBookingExistById=async function (id:string) {
+    return await Bookings.findById(id)
+}
+
+export const Bookings=model <TBooking,bookingMode>('bookings',bookingSchema)

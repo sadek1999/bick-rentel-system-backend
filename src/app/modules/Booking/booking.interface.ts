@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TBooking={
     userId?:Types.ObjectId;
@@ -8,4 +8,8 @@ export type TBooking={
     totalCost?:number;
     isReturned?:boolean;
     
+}
+
+export interface bookingMode extends Model<TBooking>{
+  isBookingExistById(id:string):Promise<TBooking|undefined>
 }
