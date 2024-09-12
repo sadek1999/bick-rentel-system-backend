@@ -32,9 +32,18 @@ const Login = async (payLoad: TUser) => {
     config.access_secret as string,
     config.jwt_access_expire_in as string
   );
+  const userObj = user.toObject();
+  if(user){
+    // Convert the Mongoose document to a plain object
+    
+
+    // Remove the password field before sending the response
+    delete userObj.password;
+
+  }
   
   return {
-    user,
+    userObj,
     accessToken,
   };
 };

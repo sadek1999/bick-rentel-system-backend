@@ -30,14 +30,12 @@ const bikeSchema=new Schema<TBike>({
     model:{
         type:String,
         required:true,
-        unique:true,
+       
     },
     brand:{
         type:String,
         required:true,
     },
-},{
- timestamps:true,
 })
 
 

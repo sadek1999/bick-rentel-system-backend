@@ -10,9 +10,7 @@ const bookingSchema=new Schema<TBooking>({
     returnTime: { type: String, required:false ,default:null }, 
     totalCost: { type: Number, required: true ,default:0 }, 
     isReturned: { type: Boolean, required: true, default: false }
-},{
-    timestamps:true,
-})
+},)
 
 bookingSchema.statics.isBookingExistById=async function (id:string) {
     return await Bookings.findById(id)

@@ -11,7 +11,7 @@ const createBikeIntoDB=catchAsync(async(req,res)=>{
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
-        message:"successfully create bike in DB",
+        message:"successfully added bike in DB",
         data:result
     })
 })
@@ -39,6 +39,7 @@ const getSingleBikeFromDB=catchAsync(async(req,res)=>{
 })
 
 const  updateBikeFromDB=catchAsync(async(req,res)=>{
+    
     const result=await bikeServices.updateBike(req.params.id,req.body);
     SendResponse(res,{
         success:true,

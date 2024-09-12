@@ -1,16 +1,20 @@
+import express from "express";
+import { bikeController } from "./bike.controller";
+import ValidateRequest from "../../middlewares/validateRequest";
+import { bikeValidationSchema } from "./bike.validation";
+import auth from "../../middlewares/auth";
 
-import  express  from 'express';
-import { bikeController } from './bike.controller';
-import ValidateRequest from '../../middlewares/validateRequest';
-import { bikeValidationSchema } from './bike.validation';
+const router = express.Router();
 
-const router=express.Router()
+router.post(
+  "/",
+  auth('admin'),
+  ValidateRequest(bikeValidationSchema),
+  bikeController.createBikeIntoDB
+);
+router.get("/",auth('admin','user'), bikeController.getAllBikesFromDB);
+router.get("/:id", auth('admin','user'),bikeController.getSingleBikeFromDB);
+router.patch("/:id",auth('admin'), bikeController.updateBikeFromDB);
+router.delete("/:id",auth('admin'), bikeController.deleteBikeFromDB);
 
-router.post('/',ValidateRequest(bikeValidationSchema) ,bikeController.createBikeIntoDB)
-router.get("/",bikeController.getAllBikesFromDB);
-router.get("/:id",bikeController.getSingleBikeFromDB)
-router.patch("/:id",bikeController.updateBikeFromDB)
-router.delete("/:id",bikeController.deleteBikeFromDB)
-
-
-export const bikeRouter=router
+export const bikeRouter = router;

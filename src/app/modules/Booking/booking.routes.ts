@@ -9,11 +9,11 @@ const router = express.Router();
 
 router.post(
   "/",
-  auth('admin'),
+  auth('admin','user'),
   ValidateRequest(bookingsValidationSchema),
   bookingsControllers.createBookingIntoDB
 );
-router.get("/",auth('admin'), bookingsControllers.getAllBookingsFromDB);
+router.get("/",auth('admin','user'), bookingsControllers.getAllBookingsFromDB);
 router.put('/:id/return',auth('admin'),bookingsControllers.returnBike)
 
 router.get("/id",bookingsControllers.getSingleBookingsFromDB);

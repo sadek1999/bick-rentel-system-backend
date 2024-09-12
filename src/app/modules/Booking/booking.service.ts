@@ -26,7 +26,10 @@ const crateBookings = async (payload) => {
     const bike = await Bike.isBikeExistById(payload.body.bikeId);
 
     if (!bike) {
-      throw new AppError(httpStatus.NOT_FOUND, "This Bike is not available");
+      throw new AppError(httpStatus.NOT_FOUND, "Bike is not found in db");
+    }
+    if(!bike.isAvailable){
+      throw new AppError(httpStatus.FORBIDDEN,"Bike is not available")
     }
 
     bookingData.userId = user?._id;
@@ -79,14 +82,16 @@ const returnBike = async (payload) => {
 
     booking.returnTime = returnTime.toISOString();
     booking.totalCost = Math.round(bike?.pricePerHour * totalTime);
+    booking.isReturned=true;
 
     const updateBooking = await Bookings.findByIdAndUpdate(id, booking, {
       new: true,
       session,
     });
+    const bikeId=bike?.id
 
     const updateBike = await Bike.findByIdAndUpdate(
-      bike?.id,
+      bikeId,
       {
         isAvailable: true,
       },
@@ -95,15 +100,24 @@ const returnBike = async (payload) => {
         session,
       }
     );
+    if(!updateBike){
+      throw new AppError(httpStatus.FORBIDDEN,'Bike is not updated')
+    }
 
-    session.commitTransaction();
-    session.endSession();
-
-    return updateBooking;
+    await session.commitTransaction();
+    await session.endSession();
+  
+    return{ updateBooking };
   } catch (err: any) {
-    session.abortTransaction();
-    session.endSession();
+    // console.log(err)
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     throw new Error(err);
+    
+  }
+  finally{
+    session.endSession();
   }
 };
 

@@ -11,7 +11,7 @@ import { TUserRole } from "../modules/user/user.interface";
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     //   validation
-    const token = req.headers.authorization?.split(" ")[2];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are  unauthorize user");
