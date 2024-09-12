@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { TBike } from "./bike.interface";
+import { BikeModel, TBike } from "./bike.interface";
 
 
 const bikeSchema=new Schema<TBike>({
@@ -54,6 +54,8 @@ bikeSchema.pre("aggregate",function(next){
     next()
 })
 
+bikeSchema.statics.isBikeExistById=async function (id:string) {
+    return await Bike.findById(id)
+}
 
-
-export const Bike=model <TBike>("Bike",bikeSchema)
+export const Bike=model <TBike,BikeModel>("Bike",bikeSchema)

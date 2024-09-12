@@ -19,13 +19,7 @@ const LoginUser=catchAsync(async(req,res)=>{
         data:user
       })
 
-    // SendResponse(res,{
-    //     statusCode:httpStatus.OK,
-    //     success:true,
-    //     message:"successfully login user",
-    //     token:accessToken,
-    //     data:user
-    // })
+  
 })
 const singUpUser=catchAsync(async(req,res)=>{
     const result= await authServices.singUp(req.body)

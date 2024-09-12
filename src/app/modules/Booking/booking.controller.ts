@@ -6,7 +6,7 @@ import { bookingsServices } from "./booking.service";
 
 
 const createBookingIntoDB=catchAsync(async(req,res)=>{
-    const result=await bookingsServices.crateBookings(req.body);
+    const result=await bookingsServices.crateBookings(req);
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
@@ -16,7 +16,7 @@ const createBookingIntoDB=catchAsync(async(req,res)=>{
 })
 
 const getAllBookingsFromDB=catchAsync(async(req,res)=>{
-    const  result=await bookingsServices.getAllBookings();
+    const  result=await bookingsServices.getAllBookings(req);
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,

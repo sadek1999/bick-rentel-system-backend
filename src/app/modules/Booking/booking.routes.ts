@@ -3,12 +3,13 @@ import { bookingsControllers } from "./booking.controller";
 import ValidateRequest from "../../middlewares/validateRequest";
 import { bookingsValidationSchema } from "./booking.validation";
 import auth from "../../middlewares/auth";
-import { User_Role } from "../user/user.const";
+
 
 const router = express.Router();
 
 router.post(
   "/",
+  auth('admin'),
   ValidateRequest(bookingsValidationSchema),
   bookingsControllers.createBookingIntoDB
 );

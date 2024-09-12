@@ -1,9 +1,9 @@
 import { Types } from "mongoose";
 
 export type TBooking={
-    userId:Types.ObjectId;
+    userId?:Types.ObjectId;
     bikeId:Types.ObjectId;
-    startTime:string;
+    startTime?:string;
     returnTime?:string;
     totalCost?:number;
     isReturned?:boolean;
