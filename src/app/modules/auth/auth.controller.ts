@@ -10,7 +10,7 @@ import { authServices } from "./auth.service";
 const LoginUser=catchAsync(async(req,res)=>{
     const result=await authServices.Login(req.body);
 
-    const {accessToken, UserData }=result
+    const {accessToken, user }=result
     
     
       res.status(httpStatus.OK).json({
@@ -18,7 +18,7 @@ const LoginUser=catchAsync(async(req,res)=>{
         statusCode:httpStatus.OK,
         message:'User logged in successfully',
         token:accessToken,
-        data: UserData
+        data: user
       })
 
   

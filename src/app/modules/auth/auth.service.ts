@@ -9,7 +9,7 @@ import { createToken } from "./auth.utills";
 const Login = async (payLoad: TUser) => {
   const { email } = payLoad;
   const user = await User.isUserExistsByEmail(email);
-  //   console.log(user)
+    // console.log(user)
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User is not found");
@@ -34,10 +34,11 @@ const Login = async (payLoad: TUser) => {
     config.jwt_access_expire_in as string
   );
  
-  const {password ,...UserData}=user
+  user.password=''
+  // console.log(UserData)
   
   return {
-    UserData,
+    user,
     accessToken,
   };
 };

@@ -31,8 +31,9 @@ const deleteBike = async (id:string) => {
 };
 
 const updateBike = async (id:string,payload:Partial<TBike>) => {
-//  console.log(id,payload)
+ console.log(id,payload)
  const result=await Bike.findByIdAndUpdate(id,payload,{new:true})
+//  console.log(result)
  return result;
 };
 
