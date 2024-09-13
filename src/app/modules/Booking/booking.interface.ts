@@ -1,8 +1,8 @@
-import { Model, Types } from "mongoose";
+import  { Model,  Types } from "mongoose";
 
 export type TBooking={
     userId?:Types.ObjectId;
-    bikeId:Types.ObjectId;
+    bikeId:string;
     startTime?:string;
     returnTime?:string;
     totalCost?:number;

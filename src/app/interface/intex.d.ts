@@ -1,9 +1,9 @@
 import jwtPayload from "jsonwebtoken"
 
 declare global{
-    namespace express{
+    namespace Express{
         interface Request{
-            use:jwtPayload
+            user?:jwtPayload
         }
     }
 }

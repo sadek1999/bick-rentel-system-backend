@@ -8,9 +8,6 @@ import { User } from "../modules/user/user.model";
 import jwt from "jsonwebtoken";
 import { TUserRole } from "../modules/user/user.interface";
 
- interface AuthenticatedRequest extends Request {
-  user?: any;
-}
 
 
 const auth = (...requiredRoles: TUserRole[]) => {
@@ -55,7 +52,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     
 
    
-    (req as AuthenticatedRequest).user = decoded;
+    req.user = decoded;
 
     next();
   });

@@ -1,7 +1,9 @@
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { User_Role } from "./user.const";
 
+
 export type TUser={
+    _id:mongoose.Types.ObjectId
     name:string;
     email:string;
     password:string;

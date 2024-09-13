@@ -1,16 +1,18 @@
-import { Model} from "mongoose"
+import mongoose, { Model } from "mongoose";
 
-export type TBike={
-    name:string
-    description:string,
-    pricePerHour:number,
-    isAvailable:boolean,
-    cc:string,
-    year:string,
-    model:string,
-    brand:string
+export type TBike = {
+    _id:mongoose.Types.ObjectId
+
+  name: string;
+  description: string;
+  pricePerHour: number;
+  isAvailable: boolean;
+  cc: string;
+  year: string;
+  model: string;
+  brand: string;
+}| undefined;
+
+export interface BikeModel extends Model<TBike> {
+  isBikeExistById(id: string): Promise<TBike | null>;
 }
-
- export interface BikeModel extends Model<TBike>{
-    isBikeExistById(id:string):Promise<TBike |null>;
- }

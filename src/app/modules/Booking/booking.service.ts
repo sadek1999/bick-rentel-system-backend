@@ -9,10 +9,11 @@ import { TBooking } from "./booking.interface";
 import mongoose  from "mongoose";
 import { JwtPayload } from "jsonwebtoken";
 
-const crateBookings = async (data:Partial<TBooking>, payload:JwtPayload) => {
-  console.log(data ,payload);
+const crateBookings = async (data:Partial<TBooking>, payload?:JwtPayload) => {
+  // console.log(data ,payload);
   const bookingData: Partial<TBooking> = {};
   bookingData.bikeId = data?.bikeId;
+  let bike;
 
   bookingData.startTime = data?.startTime;
   const session = await mongoose.startSession();
@@ -24,7 +25,11 @@ const crateBookings = async (data:Partial<TBooking>, payload:JwtPayload) => {
       throw new AppError(httpStatus.NOT_FOUND, "user is not found");
     }
 
-    const bike = await Bike.isBikeExistById(data?.bikeId);
+    // const bike = await Bike.isBikeExistById(data?.bikeId);
+    if(data?.bikeId){
+       bike = await Bike.isBikeExistById(data?.bikeId);
+      // bike=await Bike.findById(data?.bikeId)
+    }
 
     if (!bike) {
       throw new AppError(httpStatus.NOT_FOUND, "Bike is not found in db");
@@ -33,7 +38,7 @@ const crateBookings = async (data:Partial<TBooking>, payload:JwtPayload) => {
       throw new AppError(httpStatus.FORBIDDEN,"Bike is not available")
     }
 
-    bookingData.userId = (user )?._id;
+    bookingData.userId = (user)?._id;
 
     const createBooking = await Bookings.create([bookingData], { session });
     if (!createBooking) {
@@ -89,7 +94,7 @@ const returnBike = async (payload:{id:string}) => {
       new: true,
       session,
     });
-    const bikeId=(bike )?.id
+    const bikeId=(bike)?._id
 
     const updateBike = await Bike.findByIdAndUpdate(
       bikeId,
