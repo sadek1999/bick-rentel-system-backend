@@ -16,7 +16,7 @@ const createUserIntoDB=catchAsync(async(req,res)=>{
 })
 
 const getAllUsersFromDB=catchAsync(async(req,res)=>{
-    const result=await userService.getAllUsers()
+    const result=await userService.getAllUsers({})
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,

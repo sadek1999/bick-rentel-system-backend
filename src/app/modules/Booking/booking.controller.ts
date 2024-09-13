@@ -3,12 +3,13 @@ import catchAsync from "../../utils/catchAsync";
 import { SendResponse } from "../../utils/sendResponse";
 
 import { bookingsServices } from "./booking.service";
-import { authController } from "../auth/auth.controller";
-import { authServices } from "../auth/auth.service";
+
 
 
 const createBookingIntoDB=catchAsync(async(req,res)=>{
-    const result=await bookingsServices.crateBookings(req);
+    const {...data}=req.body;
+   
+    const result=await bookingsServices.crateBookings(data,req.user);
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
@@ -18,7 +19,7 @@ const createBookingIntoDB=catchAsync(async(req,res)=>{
 })
 
 const returnBike=catchAsync(async(req,res)=>{
-    const result= await bookingsServices.returnBike(req.params)
+    const result= await bookingsServices.returnBike({ id:req.params.id})
     
     SendResponse(res,{
         success:true,
@@ -28,7 +29,7 @@ const returnBike=catchAsync(async(req,res)=>{
     })
 })
 const getAllBookingsFromDB=catchAsync(async(req,res)=>{
-    const  result=await bookingsServices.getAllBookings(req);
+    const  result=await bookingsServices.getAllBookings();
     SendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
@@ -37,39 +38,39 @@ const getAllBookingsFromDB=catchAsync(async(req,res)=>{
     })
 })
 
-const getSingleBookingsFromDB=catchAsync(async(req,res)=>{
-    const result=await bookingsServices.getSingleBookings(req.params.id)
-    SendResponse(res,{
-        success:true,
-        statusCode:httpStatus.OK,
-        message:"successfully get the booking from database",
-        data:result
-    })
-})
-const updateBookingInDB=catchAsync(async(req,res)=>{
-    const result=await bookingsServices.updateBooking(req)
-    SendResponse(res,{
-        success:true,
-        statusCode:httpStatus.OK,
-        message:"successfully update bookings in database",
-        data:result
-    })
-})
-const deleteBookingsFromDB=catchAsync(async(req,res)=>{
-    const result=await bookingsServices.deleteBooking(req.params.id)
-    SendResponse(res,{
-        success:true,
-        statusCode:httpStatus.OK,
-        message:"successfully deleted bookings from database",
-        data:result
-    })
-})
+// const getSingleBookingsFromDB=catchAsync(async(req,res)=>{
+//     const result=await bookingsServices.getSingleBookings(req.params.id)
+//     SendResponse(res,{
+//         success:true,
+//         statusCode:httpStatus.OK,
+//         message:"successfully get the booking from database",
+//         data:result
+//     })
+// })
+// const updateBookingInDB=catchAsync(async(req,res)=>{
+//     const result=await bookingsServices.updateBooking(req)
+//     SendResponse(res,{
+//         success:true,
+//         statusCode:httpStatus.OK,
+//         message:"successfully update bookings in database",
+//         data:result
+//     })
+// })
+// const deleteBookingsFromDB=catchAsync(async(req,res)=>{
+//     const result=await bookingsServices.deleteBooking(req.params.id)
+//     SendResponse(res,{
+//         success:true,
+//         statusCode:httpStatus.OK,
+//         message:"successfully deleted bookings from database",
+//         data:result
+//     })
+// })
 export const bookingsControllers={
     createBookingIntoDB,
     returnBike,
     getAllBookingsFromDB,
-    getSingleBookingsFromDB,
-    updateBookingInDB,
-    deleteBookingsFromDB,
+    // getSingleBookingsFromDB,
+    // updateBookingInDB,
+    // deleteBookingsFromDB,
 
 }

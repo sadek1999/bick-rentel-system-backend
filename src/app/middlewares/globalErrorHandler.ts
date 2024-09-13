@@ -10,7 +10,7 @@ import config from "../config";
 
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
   req,

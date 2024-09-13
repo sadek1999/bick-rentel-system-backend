@@ -8,6 +8,11 @@ import { User } from "../modules/user/user.model";
 import jwt from "jsonwebtoken";
 import { TUserRole } from "../modules/user/user.interface";
 
+ interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+
+
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     //   validation
@@ -50,7 +55,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     
 
    
-    req.user = decoded;
+    (req as AuthenticatedRequest).user = decoded;
 
     next();
   });

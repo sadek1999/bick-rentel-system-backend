@@ -6,24 +6,25 @@ import { Bookings } from "./booking.model";
 import { Bike } from "../bike/bike.model";
 
 import { TBooking } from "./booking.interface";
-import mongoose from "mongoose";
+import mongoose  from "mongoose";
+import { JwtPayload } from "jsonwebtoken";
 
-const crateBookings = async (payload) => {
-  // console.log(payload.body);
+const crateBookings = async (data:Partial<TBooking>, payload:JwtPayload) => {
+  console.log(data ,payload);
   const bookingData: Partial<TBooking> = {};
-  bookingData.bikeId = payload?.body.bikeId;
+  bookingData.bikeId = data?.bikeId;
 
-  bookingData.startTime = payload?.body.startTime;
+  bookingData.startTime = data?.startTime;
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
-    const user = await User.isUserExistsByEmail(payload?.user.userEmail);
+    const user = await User.isUserExistsByEmail(payload?.userEmail);
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, "user is not found");
     }
 
-    const bike = await Bike.isBikeExistById(payload.body.bikeId);
+    const bike = await Bike.isBikeExistById(data?.bikeId);
 
     if (!bike) {
       throw new AppError(httpStatus.NOT_FOUND, "Bike is not found in db");
@@ -32,7 +33,7 @@ const crateBookings = async (payload) => {
       throw new AppError(httpStatus.FORBIDDEN,"Bike is not available")
     }
 
-    bookingData.userId = user?._id;
+    bookingData.userId = (user )?._id;
 
     const createBooking = await Bookings.create([bookingData], { session });
     if (!createBooking) {
@@ -40,7 +41,7 @@ const crateBookings = async (payload) => {
     }
 
     const updateBike = await Bike.findByIdAndUpdate(
-      payload.body.bikeId,
+      data?.bikeId,
       { isAvailable: false },
       { new: true, session }
     );
@@ -51,14 +52,14 @@ const crateBookings = async (payload) => {
     await session.commitTransaction();
     await session.endSession();
     return createBooking;
-  } catch (err: any) {
+  } catch (err) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err);
+    throw err
   }
 };
 
-const returnBike = async (payload) => {
+const returnBike = async (payload:{id:string}) => {
   const { id } = payload;
 
   const session = await mongoose.startSession();
@@ -68,17 +69,17 @@ const returnBike = async (payload) => {
     if (!booking) {
       throw new AppError(httpStatus.NOT_FOUND, "Felid to find booking");
     }
-    const bike = await Bike.isBikeExistById(booking?.bikeId);
+    const bike = await Bike.isBikeExistById(booking?.bikeId.toString());
     if (!bike) {
       throw new AppError(httpStatus.NOT_FOUND, "Felid to find the bike");
     }
     const startTimeInString = booking.startTime;
 
-    const startTimeInDate = new Date(startTimeInString);
+    const startTimeInDate = new Date(startTimeInString ||Date.now());
 
     const returnTime = new Date();
-
-    const totalTime = (returnTime - startTimeInDate) / (1000 * 60 * 60);
+    const totalTime = (returnTime.getTime() - startTimeInDate.getTime()) / (1000 * 60 * 60);
+    // const totalTime = (returnTime - startTimeInDate) / (1000 * 60 * 60);
 
     booking.returnTime = returnTime.toISOString();
     booking.totalCost = Math.round(bike?.pricePerHour * totalTime);
@@ -88,7 +89,7 @@ const returnBike = async (payload) => {
       new: true,
       session,
     });
-    const bikeId=bike?.id
+    const bikeId=(bike )?.id
 
     const updateBike = await Bike.findByIdAndUpdate(
       bikeId,
@@ -108,12 +109,12 @@ const returnBike = async (payload) => {
     await session.endSession();
   
     return{ updateBooking };
-  } catch (err: any) {
+  } catch (err) {
     // console.log(err)
     if (session.inTransaction()) {
       await session.abortTransaction();
     }
-    throw new Error(err);
+    throw err
     
   }
   finally{
@@ -125,15 +126,15 @@ const getAllBookings = async () => {
   const result = await Bookings.find();
   return result;
 };
-const getSingleBookings = async () => {};
-const updateBooking = async () => {};
-const deleteBooking = async () => {};
+// const getSingleBookings = async () => {};
+// const updateBooking = async () => {};
+// const deleteBooking = async () => {};
 
 export const bookingsServices = {
   crateBookings,
   getAllBookings,
-  getSingleBookings,
-  updateBooking,
-  deleteBooking,
+  // getSingleBookings,
+  // updateBooking,
+  // deleteBooking,
   returnBike,
 };

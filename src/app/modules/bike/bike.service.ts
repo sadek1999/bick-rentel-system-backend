@@ -19,7 +19,7 @@ const getallBikes = async (query: Record<string, unknown>) => {
   return result;
 };
 const getSingleBike = async (id:string) => {
-  console.log(id)
+  // console.log(id)
   const result = await Bike.findById(id);
   return result;
 };

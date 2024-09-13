@@ -16,8 +16,8 @@ router.post(
 router.get("/",auth('admin','user'), bookingsControllers.getAllBookingsFromDB);
 router.put('/:id/return',auth('admin'),bookingsControllers.returnBike)
 
-router.get("/id",bookingsControllers.getSingleBookingsFromDB);
-router.patch("/id",bookingsControllers.updateBookingInDB);
-router.delete("/id",bookingsControllers.deleteBookingsFromDB)
+// router.get("/id",bookingsControllers.getSingleBookingsFromDB);
+// router.patch("/id",bookingsControllers.updateBookingInDB);
+// router.delete("/id",bookingsControllers.deleteBookingsFromDB)
 
 export const bookingsRouter = router;

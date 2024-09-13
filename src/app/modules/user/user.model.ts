@@ -30,8 +30,8 @@ userSchema.pre("aggregate", function (next) {
 
 // change the password plain text ot hash before save
 userSchema.pre("save", async function (Next) {
-  let user = this;
-  user.password = await bcrypt.hash(user.password, Number(config.saltRound));
+  // const user = this;
+  this.password = await bcrypt.hash(this.password, Number(config.saltRound));
   Next();
 });
 //

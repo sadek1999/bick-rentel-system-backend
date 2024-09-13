@@ -5,6 +5,7 @@ import { User } from "../user/user.model";
 import config from "../../config";
 import { createToken } from "./auth.utills";
 
+
 const Login = async (payLoad: TUser) => {
   const { email } = payLoad;
   const user = await User.isUserExistsByEmail(email);
@@ -32,18 +33,11 @@ const Login = async (payLoad: TUser) => {
     config.access_secret as string,
     config.jwt_access_expire_in as string
   );
-  const userObj = user.toObject();
-  if(user){
-    // Convert the Mongoose document to a plain object
-    
-
-    // Remove the password field before sending the response
-    delete userObj.password;
-
-  }
+ 
+  const {password ,...UserData}=user
   
   return {
-    userObj,
+    UserData,
     accessToken,
   };
 };
