@@ -7,7 +7,7 @@ import { authRouter } from "../modules/auth/auth.routes";
 const router = Router();
 const moduleRoutes = [
   {
-    path: "/bike",
+    path: "/bikes",
     router: bikeRouter,
   },
   {
